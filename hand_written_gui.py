@@ -76,7 +76,7 @@ class grid:
                 self.img[i][j] = 0
                 self.g[i][j].reset_value()
         result_labels[0].config(text = "Actual - " )
-        result_labels[1].config(text = "Predicted - ")
+        result_labels[1].config(text = "Predicted - 0")
         result_labels[1].config(bg = "green")
         for i, label in enumerate(labels):
                 label.config(text = f"{i} - {0:.2f}")
@@ -135,6 +135,7 @@ class grid:
             a = self.predict(inp).tolist()
             a = [i[0] for i in a]
             index = [i for i in range(10)]
+            result_labels[1].config(text = "Predicted - " + str(np.argmax(a)))
             if self.labels:
                 bubble_sort(a, index)
                 for label, i, act in zip(labels, index, a):
@@ -164,9 +165,9 @@ def bubble_sort(acts, index):
 root = tk.Tk()
 root.config(bg = "white")
 root.geometry("800x600")
+root.title("Handwritten Recognition")
 canvas = Canvas(root, width = 400, height = 400, background = "white", bd=0, highlightthickness=0)
 last_x, last_y = 0, 0
-#canvas.pack(padx = 0, pady = 0)
 canvas.grid(row= 0, column = 1)
 
 def save_img():
@@ -206,8 +207,8 @@ for i in range(10):
 result_labels = []
 can4 = Canvas(root, width = 50, height=550, background = "white", bd=0, highlightthickness=0)
 can4.grid(row = 0, column = 0)
-result_labels.append(Label(can4, text = "Actual - ", bg = "green", fg = "white", font = ("Arial", 25)))
-result_labels.append(Label(can4, text = "Predicted - ", bg = "green", font = ("Arial", 25)))
+result_labels.append(Label(can4, text = "Actual -  ", bg = "green", fg = "white", font = ("Arial", 25)))
+result_labels.append(Label(can4, text = "Predicted - 0", bg = "green", font = ("Arial", 25)))
 for l in result_labels:
     l.pack(padx = (20, 10), pady = (20, 20))
 
